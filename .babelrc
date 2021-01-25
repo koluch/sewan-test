@@ -1,0 +1,23 @@
+{
+  "presets": [
+    "@babel/preset-typescript",
+    "@babel/react",
+    [
+      "@babel/env",
+      {
+        "targets": {
+          "browsers": "last 2 years"
+        }
+      }
+    ]
+  ],
+  "plugins": [
+    [
+      "babel-plugin-styled-components",
+      {
+        "displayName": true,
+        "fileName": false
+      }
+    ]
+  ]
+}
