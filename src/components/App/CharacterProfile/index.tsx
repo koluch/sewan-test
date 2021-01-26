@@ -12,7 +12,9 @@ export default function (): JSX.Element {
   return (
     <Root>
       <div>Character #{params.id}</div>
-      <Link route={ROUTES.episodeList}>Episode list</Link>
+      <Link route={ROUTES.episodeList} params={null}>
+        Episode list
+      </Link>
     </Root>
   );
 }
