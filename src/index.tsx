@@ -1,9 +1,6 @@
 import React from "react";
 import { render } from "react-dom";
-import styled from "styled-components";
 
-const Title = styled.h1`
-  color: red;
-`;
+import App from "./components/App";
 
-render(<Title>hi!</Title>, document.getElementById("root"));
+render(<App />, document.getElementById("root"));
