@@ -1,3 +1,4 @@
+import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import styled from "styled-components";
@@ -15,25 +16,31 @@ const Root = styled.div`
 `;
 
 export default function App(): JSX.Element {
+  const client = new ApolloClient({
+    uri: process.env.GRAPHQL_SCHEMA_URL,
+    cache: new InMemoryCache(),
+  });
   return (
     <>
       <Reset />
       <GlobalStyles />
-      <BrowserRouter>
-        <Root>
-          <Switch>
-            <Route path={ROUTES.character.path} exact>
-              <CharacterProfile />
-            </Route>
-            <Route path={ROUTES.episodeList.path} exact>
-              <EpisodeList />
-            </Route>
-            <Route>
-              <Page404 />
-            </Route>
-          </Switch>
-        </Root>
-      </BrowserRouter>
+      <ApolloProvider client={client}>
+        <BrowserRouter>
+          <Root>
+            <Switch>
+              <Route path={ROUTES.character.path} exact>
+                <CharacterProfile />
+              </Route>
+              <Route path={ROUTES.episodeList.path} exact>
+                <EpisodeList />
+              </Route>
+              <Route>
+                <Page404 />
+              </Route>
+            </Switch>
+          </Root>
+        </BrowserRouter>
+      </ApolloProvider>
     </>
   );
 }

@@ -1,26 +1,29 @@
+import { useQuery } from "@apollo/client";
 import React from "react";
 import styled from "styled-components";
 
-import { ROUTES } from "../../../services/routing";
-import Link from "../../Link";
+import EpisodeListItem from "./EpisodeListItem";
+import { EPISODES_QUERY, EpisodesQuery } from "./graphql";
 
-const Root = styled.div``;
-const Row = styled.div``;
+const Root = styled.div`
+  display: grid;
+  grid-gap: 2rem;
+`;
 
 export default function (): JSX.Element {
+  const { loading, error, data } = useQuery<EpisodesQuery>(EPISODES_QUERY);
+
+  if (loading) {
+    return <h1>Loading</h1>;
+  }
+  if (error != null) {
+    return <h1>Error</h1>;
+  }
   return (
     <Root>
-      <Row>
-        <Link route={ROUTES.character} params={{ id: "morty" }}>
-          Morty
-        </Link>
-      </Row>
-      <Row>
-        {" "}
-        <Link route={ROUTES.character} params={{ id: "rick" }}>
-          Rick
-        </Link>
-      </Row>
+      {data?.episodes?.results?.map((episode) => (
+        <EpisodeListItem key={episode?.id} episode={episode} />
+      ))}
     </Root>
   );
 }
