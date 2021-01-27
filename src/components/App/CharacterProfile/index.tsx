@@ -1,10 +1,11 @@
-import { useQuery } from "@apollo/client";
 import React from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
+import { useQueryResource } from "../../../helpers/graphql";
 import { ROUTES } from "../../../services/routing";
 import Link from "../../Link";
+import AsyncResourceRenderer from "../AsyncResourceRenderer";
 
 import {
   CHARACTER_QUERY,
@@ -50,45 +51,41 @@ const Episode = styled.div``;
 
 export default function (): JSX.Element {
   const params = useParams<{ id: string }>();
-  const { data, loading, error } = useQuery<
-    CharacterQuery,
-    CharacterQueryVariables
-  >(CHARACTER_QUERY, {
-    variables: {
-      id: params.id,
-    },
-  });
-
-  if (loading) {
-    return <h1>Loading</h1>;
-  }
-  if (error != null) {
-    return <h1>Error</h1>;
-  }
-
-  const character = data?.character;
-
+  const result = useQueryResource<CharacterQuery, CharacterQueryVariables>(
+    CHARACTER_QUERY,
+    {
+      variables: {
+        id: params.id,
+      },
+    }
+  );
   return (
     <Root>
       <Link route={ROUTES.episodeList} params={null}>
         Back to episode list
       </Link>
-      <Name>{character?.name}</Name>
-      <Image src={character?.image || ""} />
-      <Gender>{character?.gender}</Gender>
-      <Status>Status: {character?.status}</Status>
-      <Species>Species: {character?.species}</Species>
-      <Type>Type: {character?.type}</Type>
-      <Origin>Origin: {character?.origin?.name}</Origin>
-      <Location>Location: {character?.location?.name}</Location>
-      <EpisodesTitle>Episodes:</EpisodesTitle>
-      <Episodes>
-        {character?.episode?.map((episode) => (
-          <Episode key={episode?.id}>
-            {episode?.episode} - {episode?.name}
-          </Episode>
-        ))}
-      </Episodes>
+      <AsyncResourceRenderer resource={result}>
+        {({ character }) => (
+          <>
+            <Name>{character?.name}</Name>
+            <Image src={character?.image || ""} />
+            <Gender>{character?.gender}</Gender>
+            <Status>Status: {character?.status}</Status>
+            <Species>Species: {character?.species}</Species>
+            <Type>Type: {character?.type}</Type>
+            <Origin>Origin: {character?.origin?.name}</Origin>
+            <Location>Location: {character?.location?.name}</Location>
+            <EpisodesTitle>Episodes:</EpisodesTitle>
+            <Episodes>
+              {character?.episode?.map((episode) => (
+                <Episode key={episode?.id}>
+                  {episode?.episode} - {episode?.name}
+                </Episode>
+              ))}
+            </Episodes>{" "}
+          </>
+        )}
+      </AsyncResourceRenderer>
     </Root>
   );
 }
