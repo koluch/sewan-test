@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { useQueryResource } from "../../../helpers/graphql/hooks";
 import { ROUTES } from "../../../services/routing";
 import Link from "../../Link";
-import AsyncResourceRenderer from "../AsyncResourceRenderer";
+import AsyncResourceRenderer from "../kit/AsyncResourceRenderer";
 
 import {
   CHARACTER_QUERY,
@@ -82,7 +82,7 @@ export default function (): JSX.Element {
                   {episode?.episode} - {episode?.name}
                 </Episode>
               ))}
-            </Episodes>{" "}
+            </Episodes>
           </>
         )}
       </AsyncResourceRenderer>

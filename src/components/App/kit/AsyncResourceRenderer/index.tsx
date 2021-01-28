@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import * as ar from "../../../helpers/asyncResource";
+import * as ar from "../../../../helpers/asyncResource";
 
 const FadeOut = styled.div`
   opacity: 0.5;

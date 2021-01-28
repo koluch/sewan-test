@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { usePaginatedQuery } from "../../../helpers/graphql/hooks";
 import { ROUTES, useRouteParams } from "../../../services/routing";
-import PaginatedResourceRenderer from "../PaginatedResourceRenderer";
+import PaginatedResourceRenderer from "../kit/PaginatedResourceRenderer";
 
 import EpisodeListItem from "./EpisodeListItem";
 import SeasonsFilter from "./SeasonsFilter";
@@ -33,11 +33,8 @@ export default function (): JSX.Element {
     Episode,
     EpisodesQueryVariables
   >(EPISODES_QUERY, (queryData) => queryData.episodes, {
-    variables: {
-      page: 1,
-      filter: {
-        episode: season != null ? `S0${season}` : "",
-      },
+    filter: {
+      episode: season != null ? `S0${season}` : "",
     },
   });
 

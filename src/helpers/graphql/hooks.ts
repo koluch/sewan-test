@@ -1,11 +1,10 @@
 import { useQuery } from "@apollo/client";
-import { OperationVariables } from "@apollo/client/core";
 import { QueryHookOptions } from "@apollo/client/react/types/types";
 import { TypedDocumentNode } from "@graphql-typed-document-node/core";
 import { useEffect, useState } from "react";
 
 import * as ar from "../asyncResource";
-import { useDeepCompareValue } from "../hooks";
+import { useDeepCompareEffect, useDeepCompareValue } from "../hooks";
 
 import {
   PaginatedData,
@@ -13,7 +12,7 @@ import {
   PaginatedVariables,
 } from "./pagination";
 
-export function useQueryResource<Data, Variables = OperationVariables>(
+export function useQueryResource<Data, Variables>(
   query: TypedDocumentNode<Data, Variables>,
   options?: QueryHookOptions<Data, Variables>
 ): {
@@ -40,6 +39,8 @@ export function useQueryResource<Data, Variables = OperationVariables>(
   };
 }
 
+type VariablesWithoutPagination<Variables> = Omit<Variables, "page">;
+
 export function usePaginatedQuery<
   Data,
   Item,
@@ -47,32 +48,32 @@ export function usePaginatedQuery<
 >(
   query: TypedDocumentNode<Data, Variables>,
   getPaginatedData: (data: Data) => PaginatedData<Item> | null,
+  variables: VariablesWithoutPagination<Variables>,
   options: QueryHookOptions<Data, Variables> = {}
 ): PaginatedResponse<Item> {
-  const [page, setPage] = useState<number>(1);
-  const newVariables = useDeepCompareValue(
-    options.variables != null
-      ? {
-          ...options.variables,
-          page,
-        }
-      : {
-          page,
-        }
-  );
-
-  const newOptions = {
-    ...options,
-    variables: newVariables,
+  type FullVariables = VariablesWithoutPagination<Variables> & {
+    page: number;
   };
-  const { resource, fetchMore } = useQueryResource(query, newOptions);
+
+  const [page, setPage] = useState<number>(1);
+
+  useDeepCompareEffect(() => {
+    setPage(1);
+  }, [variables]);
+
+  const fullVariables: FullVariables = useDeepCompareValue({
+    ...variables,
+    page,
+  });
+
+  const { resource, fetchMore } = useQueryResource(query, {
+    ...options,
+    variables: fullVariables,
+  });
 
   useEffect(() => {
-    fetchMore({
-      ...newVariables,
-      page,
-    });
-  }, [newVariables, fetchMore, page]);
+    fetchMore(fullVariables);
+  }, [fullVariables, fetchMore]);
 
   return {
     resource: ar.map(resource, getPaginatedData),
