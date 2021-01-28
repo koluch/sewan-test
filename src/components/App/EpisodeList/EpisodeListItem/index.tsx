@@ -23,9 +23,25 @@ const AirDate = styled.h2`
 `;
 
 const Characters = styled.div`
-  display: flex;
+  display: grid;
   gap: 1rem;
-  flex-wrap: wrap;
+  grid-template-columns: repeat(3, 1fr);
+
+  @media (min-width: 480px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  @media (min-width: 960px) {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(8, 1fr);
+  }
 `;
 
 interface Props {

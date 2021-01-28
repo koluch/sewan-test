@@ -6,8 +6,8 @@ import Link from "../../../../Link";
 import { Character } from "../../graphql";
 
 const Root = styled(Link)`
-  width: 80px;
-  height: 80px;
+  width: 100%;
+  padding-bottom: 100%;
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
