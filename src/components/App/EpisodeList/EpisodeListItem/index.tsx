@@ -23,10 +23,9 @@ const AirDate = styled.h2`
 `;
 
 const Characters = styled.div`
-  display: grid;
-  grid-gap: 1rem;
-  grid-template-columns: repeat(auto-fill, 80px);
-  grid-auto-rows: 80px;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
 `;
 
 interface Props {

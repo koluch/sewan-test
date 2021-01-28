@@ -9,14 +9,10 @@ const Root = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   font-size: 1.5rem;
-  line-height: 1.5em;
+  gap: 1rem;
 `;
 
 const Option = styled(Link)`
-  &:not(:first-child) {
-    margin-left: 1em;
-  }
-
   &.isActive {
     font-weight: bold;
     text-decoration: none;

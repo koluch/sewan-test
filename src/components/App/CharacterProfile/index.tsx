@@ -132,13 +132,19 @@ const EpisodesTitle = styled.div`
 const Episode = styled.div``;
 
 const LeftRight = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  justify-content: end;
-  grid-gap: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
 
-  > *:first-child {
-    justify-self: end;
+  @media (min-width: 768px) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+
+    > *:first-child {
+      justify-self: end;
+    }
   }
 `;
 
