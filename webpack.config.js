@@ -22,7 +22,7 @@ module.exports = {
     liveReload: false,
     historyApiFallback: true,
     https: true,
-    stats: 'errors-only'
+    stats: "errors-only",
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -49,10 +49,13 @@ module.exports = {
         test: /\.svg$/,
         use: [
           {
-            loader: '@svgr/webpack',
+            loader: "@svgr/webpack",
+            options: {
+              dimensions: false,
+            },
           },
           {
-            loader: 'file-loader',
+            loader: "file-loader",
           },
         ],
       },
