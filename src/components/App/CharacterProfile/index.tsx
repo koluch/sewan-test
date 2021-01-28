@@ -2,7 +2,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
-import { useQueryResource } from "../../../helpers/graphql";
+import { useQueryResource } from "../../../helpers/graphql/hooks";
 import { ROUTES } from "../../../services/routing";
 import Link from "../../Link";
 import AsyncResourceRenderer from "../AsyncResourceRenderer";
@@ -51,20 +51,20 @@ const Episode = styled.div``;
 
 export default function (): JSX.Element {
   const params = useParams<{ id: string }>();
-  const result = useQueryResource<CharacterQuery, CharacterQueryVariables>(
-    CHARACTER_QUERY,
-    {
-      variables: {
-        id: params.id,
-      },
-    }
-  );
+  const { resource } = useQueryResource<
+    CharacterQuery,
+    CharacterQueryVariables
+  >(CHARACTER_QUERY, {
+    variables: {
+      id: params.id,
+    },
+  });
   return (
     <Root>
       <Link route={ROUTES.episodeList} params={null}>
         Back to episode list
       </Link>
-      <AsyncResourceRenderer resource={result}>
+      <AsyncResourceRenderer resource={resource}>
         {({ character }) => (
           <>
             <Name>{character?.name}</Name>

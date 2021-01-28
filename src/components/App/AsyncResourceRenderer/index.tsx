@@ -1,6 +1,11 @@
 import React from "react";
+import styled from "styled-components";
 
 import * as ar from "../../../helpers/asyncResource";
+
+const FadeOut = styled.div`
+  opacity: 0.5;
+`;
 
 interface Props<T> {
   resource: ar.AsyncResource<T>;
@@ -18,7 +23,7 @@ export default function <T>(props: Props<T>): JSX.Element {
     renderInit = () => <></>,
     renderLoading = (lastState: T | null) => {
       if (lastState != null) {
-        return <>{children(lastState)}</>;
+        return <FadeOut>{children(lastState)}</FadeOut>;
       }
       return <>Loading...</>;
     },

@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-import { Unnullify } from "../../../helpers/graphql";
+import { Unnullify } from "../../../helpers/graphql/typeAdapters";
 
 import * as generated from "./__generated__/CharacterQuery";
 
