@@ -1,5 +1,11 @@
 # sewan-test
 
+Intstall:
+
+```
+npm install
+```
+
 Starting:
 
 ```
