@@ -2,9 +2,19 @@ import React from "react";
 import styled from "styled-components";
 
 import * as ar from "../../../../helpers/asyncResource";
+import Alert from "../Alert";
+import Spinner from "../Spinner";
 
 const FadeOut = styled.div`
+  position: relative;
   opacity: 0.5;
+`;
+
+const SpinnerWrap = styled.div`
+  position: absolute;
+  left: 50%;
+  top: 2rem;
+  transform: translateX(-50%);
 `;
 
 interface Props<T> {
@@ -23,12 +33,19 @@ export default function <T>(props: Props<T>): JSX.Element {
     renderInit = () => <></>,
     renderLoading = (lastState: T | null) => {
       if (lastState != null) {
-        return <FadeOut>{children(lastState)}</FadeOut>;
+        return (
+          <FadeOut>
+            <SpinnerWrap>
+              <Spinner />
+            </SpinnerWrap>
+            {children(lastState)}
+          </FadeOut>
+        );
       }
-      return <>Loading...</>;
+      return <Spinner />;
     },
     renderFailed = (reason) => {
-      return <>Error: {reason}</>;
+      return <Alert type="ERROR">{reason}</Alert>;
     },
   } = props;
   return (
