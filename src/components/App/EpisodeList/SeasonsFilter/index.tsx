@@ -31,21 +31,36 @@ const Option = styled(Link)`
 `;
 
 interface Props {
+  current: number | null;
   seasonsCount: number;
 }
 
 export default function (props: Props): JSX.Element {
-  const { seasonsCount } = props;
+  const { current, seasonsCount } = props;
   return (
     <Root>
-      <Option route={ROUTES.episodeList} params={null} className="isActive">
+      <Option
+        route={ROUTES.episodeList}
+        params={null}
+        className={current == null ? "isActive" : undefined}
+      >
         All episodes
       </Option>
-      {[...new Array(seasonsCount)].map((_, i) => (
-        <Option key={i} route={ROUTES.episodeList} params={null}>
-          Season {i + 1}
-        </Option>
-      ))}
+      {[...new Array(seasonsCount)].map((_, i) => {
+        const seasonNumber = i + 1;
+        return (
+          <Option
+            key={i}
+            route={ROUTES.episodeListBySeason}
+            params={{
+              season: seasonNumber,
+            }}
+            className={current == seasonNumber ? "isActive" : undefined}
+          >
+            Season {seasonNumber}
+          </Option>
+        );
+      })}
     </Root>
   );
 }

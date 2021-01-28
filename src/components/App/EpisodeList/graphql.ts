@@ -9,8 +9,8 @@ import {
 import * as generated from "./__generated__/EpisodesQuery";
 
 export const EPISODES_QUERY = gql`
-  query EpisodesQuery($page: Int!) {
-    episodes(page: $page) {
+  query EpisodesQuery($page: Int!, $filter: FilterEpisode) {
+    episodes(page: $page, filter: $filter) {
       info {
         count
         pages

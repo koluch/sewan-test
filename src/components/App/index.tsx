@@ -55,6 +55,9 @@ export default function App(): JSX.Element {
                 <Route path={ROUTES.episodeList.path} exact>
                   <EpisodeList />
                 </Route>
+                <Route path={ROUTES.episodeListBySeason.path} exact>
+                  <EpisodeList />
+                </Route>
                 <Route>
                   <Page404 />
                 </Route>

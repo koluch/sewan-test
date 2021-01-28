@@ -1,3 +1,5 @@
+import { useParams } from "react-router-dom";
+
 export interface Route<Params> {
   defaultParams?: Params;
   path: string;
@@ -57,8 +59,13 @@ export function makeUrl<Params>(
   return `/${result}`;
 }
 
+export function useRouteParams<Params>(_route: Route<Params>): Partial<Params> {
+  return useParams<Params>();
+}
+
 export const ROUTES = {
   root: route("/"),
   episodeList: route("/"),
+  episodeListBySeason: route<{ season: string }>("/season/:season"),
   character: route<{ id: string }>("/character/:id"),
 };
