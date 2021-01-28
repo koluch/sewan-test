@@ -21,7 +21,7 @@ const Root = styled.div`
 
 const Episodes = styled.div`
   display: grid;
-  grid-gap: 3rem;
+  grid-gap: 4rem;
 `;
 
 export default function (): JSX.Element {

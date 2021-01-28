@@ -4,8 +4,6 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
 import { useQueryResource } from "../../../helpers/graphql/hooks";
-import { ROUTES } from "../../../services/routing";
-import Link from "../../Link";
 import AsyncResourceRenderer from "../kit/AsyncResourceRenderer";
 
 import {
@@ -68,6 +66,7 @@ const ImageWrapper = styled.div`
     }
   }
 `;
+
 const Image = styled.img`
   object-fit: cover;
 `;
@@ -81,8 +80,8 @@ const Name = styled.h1`
 const Gender = styled.div`
   display: inline-flex;
   margin-left: 0.25rem;
-  width: 20px;
-  height: 20px;
+  width: 14px;
+  height: 14px;
 
   > svg {
     color: #ff51d9;
@@ -96,7 +95,16 @@ const Gender = styled.div`
 `;
 
 const Species = styled.div`
+  display: flex;
+  align-items: center;
   font-size: 0.8rem;
+  margin-top: 0.25rem;
+`;
+
+const Places = styled.div`
+  display: grid;
+  grid-gap: 0.5rem;
+  margin-top: 1rem;
 `;
 
 const Place = styled.div`
@@ -111,35 +119,30 @@ const Place = styled.div`
   }
 `;
 
+const Episodes = styled.div`
+  display: grid;
+  grid-gap: 0.75rem;
+  margin-top: 2rem;
+`;
+
 const EpisodesTitle = styled.div`
   font-weight: bold;
 `;
 
-const Episodes = styled.div`
-  display: grid;
-  grid-gap: 0.75rem;
-`;
-
 const Episode = styled.div``;
 
-const Body = styled.div`
-  display: grid;
-  grid-gap: 1rem;
-`;
-
-const Info = styled.div`
-  > *:not(:first-child) {
-    margin-top: 1rem;
-  }
-`;
-
 const LeftRight = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-content: end;
+  grid-gap: 2rem;
 
-  > *:not(:first-child) {
-    margin-left: 2rem;
+  > *:first-child {
+    justify-self: end;
   }
 `;
+
+const Info = styled.div``;
 
 export default function (): JSX.Element {
   const params = useParams<{ id: string }>();
@@ -153,72 +156,64 @@ export default function (): JSX.Element {
   });
   return (
     <Root>
-      <Link route={ROUTES.episodeList} params={null}>
-        Back to episode list
-      </Link>
       <AsyncResourceRenderer resource={resource}>
         {({ character }) => {
           const isDead = character?.status === "Dead";
           return (
-            <>
-              <Body>
-                <LeftRight>
-                  <ImageWrapper
-                    title={
-                      (character?.name || "Unknown") + (isDead ? " (dead)" : "")
-                    }
-                    className={cn(isDead && "isDead")}
+            <LeftRight>
+              <ImageWrapper
+                title={
+                  (character?.name || "Unknown") + (isDead ? " (dead)" : "")
+                }
+                className={cn(isDead && "isDead")}
+              >
+                <Image src={character?.image || ""} />
+              </ImageWrapper>
+              <Info>
+                <Name>{character?.name}</Name>
+                <Species>
+                  {[character?.species, character?.type]
+                    .filter((x) => x != "" && x != null)
+                    .join(" / ")}
+                  <Gender
+                    className={cn(character?.gender === "Male" && "isMale")}
                   >
-                    <Image src={character?.image || ""} />
-                  </ImageWrapper>
-                  <Info>
-                    <Name>
-                      {character?.name}
-                      <Gender
-                        className={cn(character?.gender === "Male" && "isMale")}
-                      >
-                        {character?.gender === "Male" && <MaleIcon />}
-                        {character?.gender === "Female" && <FemaleIcon />}
-                      </Gender>
-                    </Name>
-
-                    <Species>
-                      {[character?.species, character?.type]
-                        .filter((x) => x != "" && x != null)
-                        .join(" / ")}
-                    </Species>
-                    <Place>
-                      <HomeIcon title={"Origin"} />
-                      {[
-                        // character?.origin?.type,
-                        character?.origin?.name,
-                        // character?.origin?.dimension,
-                      ]
-                        .filter((x) => x !== "" && x != null)
-                        .join(" / ")}
-                    </Place>
-                    <Place>
-                      <LocationIcon title={"Location"} />
-                      {[
-                        // character?.location?.type,
-                        character?.location?.name,
-                        // character?.location?.dimension,
-                      ]
-                        .filter((x) => x !== "" && x != null)
-                        .join(" / ")}
-                    </Place>
-                    <Episodes>
-                      <EpisodesTitle>Episodes:</EpisodesTitle>
-                      {character?.episode?.map((episode) => (
-                        <Episode key={episode?.id}>
-                          {episode?.episode} - {episode?.name}
-                        </Episode>
-                      ))}
-                    </Episodes>
-                  </Info>
-                </LeftRight>
-              </Body>
-            </>
+                    {character?.gender === "Male" && <MaleIcon />}
+                    {character?.gender === "Female" && <FemaleIcon />}
+                  </Gender>
+                </Species>
+                <Places>
+                  <Place>
+                    <HomeIcon title={"Origin"} />
+                    {[
+                      // character?.origin?.type,
+                      character?.origin?.name,
+                      // character?.origin?.dimension,
+                    ]
+                      .filter((x) => x !== "" && x != null)
+                      .join(" / ")}
+                  </Place>
+                  <Place>
+                    <LocationIcon title={"Location"} />
+                    {[
+                      // character?.location?.type,
+                      character?.location?.name,
+                      // character?.location?.dimension,
+                    ]
+                      .filter((x) => x !== "" && x != null)
+                      .join(" / ")}
+                  </Place>
+                </Places>
+                <Episodes>
+                  <EpisodesTitle>Episodes:</EpisodesTitle>
+                  {character?.episode?.map((episode) => (
+                    <Episode key={episode?.id}>
+                      {episode?.episode} - {episode?.name}
+                    </Episode>
+                  ))}
+                </Episodes>
+              </Info>
+            </LeftRight>
           );
         }}
       </AsyncResourceRenderer>

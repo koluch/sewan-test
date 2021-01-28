@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import styled from "styled-components";
 
 import { ROUTES } from "../../services/routing";
+import Link from "../Link";
 
 import CharacterProfile from "./CharacterProfile";
 import EpisodeList from "./EpisodeList";
@@ -22,7 +23,8 @@ const Content = styled.div`
   margin: 0 auto;
 `;
 
-const LogoWrap = styled.div`
+const LogoWrap = styled(Link)`
+  display: block;
   text-align: center;
 `;
 
@@ -45,7 +47,7 @@ export default function App(): JSX.Element {
         <BrowserRouter>
           <Root>
             <Content>
-              <LogoWrap>
+              <LogoWrap route={ROUTES.root} params={null}>
                 <Logo src={logoUrl} />
               </LogoWrap>
               <Switch>
