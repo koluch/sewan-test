@@ -44,7 +44,18 @@ module.exports = {
         test: /\.tsx?$/,
         use: ["babel-loader"],
         exclude: /node_modules/,
-      }
+      },
+      {
+        test: /\.svg$/,
+        use: [
+          {
+            loader: '@svgr/webpack',
+          },
+          {
+            loader: 'file-loader',
+          },
+        ],
+      },
     ],
   },
   resolve: {

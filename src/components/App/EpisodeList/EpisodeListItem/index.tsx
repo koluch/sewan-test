@@ -5,13 +5,21 @@ import { Episode } from "../graphql";
 
 import Character from "./Character";
 
-const Title = styled.h1`
-  font-size: 1.5rem;
-`;
-
 const Root = styled.div`
   display: grid;
   grid-gap: 1rem;
+`;
+
+const Title = styled.h1`
+  font-size: 1.75rem;
+`;
+
+const EpisodeNumber = styled.span`
+  font-weight: bold;
+`;
+
+const AirDate = styled.h2`
+  font-size: 0.9rem;
 `;
 
 const Characters = styled.div`
@@ -30,8 +38,9 @@ export default function (props: Props): JSX.Element {
   return (
     <Root>
       <Title>
-        {episode?.episode} - {episode?.name}
+        <EpisodeNumber>{episode?.episode}</EpisodeNumber> — {episode?.name}
       </Title>
+      <AirDate>{episode?.air_date}</AirDate>
       <Characters>
         {episode?.characters?.map((character) => (
           <Character key={character?.id} character={character} />

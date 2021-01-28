@@ -21,6 +21,7 @@ export const EPISODES_QUERY = gql`
         id
         name
         episode
+        air_date
         characters {
           id
           name

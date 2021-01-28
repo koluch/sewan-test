@@ -16,6 +16,8 @@ const Root = styled.div`
 
 const Pagination = styled.div``;
 
+const Items = styled.div``;
+
 const PageButton = styled.button``;
 
 export default function <Item>(props: Props<Item>): JSX.Element {
@@ -30,11 +32,13 @@ export default function <Item>(props: Props<Item>): JSX.Element {
           }
           return (
             <Root>
-              {children(
-                data.results.filter(
-                  (item: Item | null): item is Item => item != null
-                )
-              )}
+              <Items>
+                {children(
+                  data.results.filter(
+                    (item: Item | null): item is Item => item != null
+                  )
+                )}
+              </Items>
               <Pagination>
                 {[...new Array(data?.info?.pages)].map((_, i) => (
                   <PageButton
