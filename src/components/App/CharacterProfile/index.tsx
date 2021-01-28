@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
 import { useQueryResource } from "../../../helpers/graphql/hooks";
-import AsyncResourceRenderer from "../kit/AsyncResourceRenderer";
+import AsyncResourceRenderer from "../../AsyncResourceRenderer";
 
 import {
   CHARACTER_QUERY,

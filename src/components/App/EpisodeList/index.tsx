@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { usePaginatedQuery } from "../../../helpers/graphql/hooks";
 import { ROUTES, useRouteParams } from "../../../services/routing";
-import PaginatedResourceRenderer from "../kit/PaginatedResourceRenderer";
+import PaginatedResourceRenderer from "../../PaginatedResourceRenderer";
 
 import EpisodeListItem from "./EpisodeListItem";
 import SeasonsFilter from "./SeasonsFilter";

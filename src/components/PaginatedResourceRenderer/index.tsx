@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 
-import { PaginatedResponse } from "../../../../helpers/graphql/pagination";
+import { PaginatedResponse } from "../../helpers/graphql/pagination";
 import AsyncResourceRenderer from "../AsyncResourceRenderer";
-import Button from "../Button";
+import Button from "../kit/Button";
 
 interface Props<Item> {
   response: PaginatedResponse<Item>;

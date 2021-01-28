@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 
-import * as ar from "../../../../helpers/asyncResource";
-import Alert from "../Alert";
-import Spinner from "../Spinner";
+import * as ar from "../../helpers/asyncResource";
+import Alert from "../kit/Alert";
+import Spinner from "../kit/Spinner";
 
 const FadeOut = styled.div`
   position: relative;
